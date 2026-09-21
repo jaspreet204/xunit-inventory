@@ -31,5 +31,21 @@ namespace Inventory_test
             Assert.False(result.IsSuccess);
             Assert.Equal("Product not found.", result.Message);
         }
+
+        [Fact]
+        public void ProcessOrder_NotEnoughStock_ReturnsError()
+        {
+            var product = new Product();
+            product.Id = "P2";
+            product.Name = "Mouse";
+            product.UnitPrice = 50;
+            product.StockQuantity = 3;
+
+            _service.AddProduct(product);
+
+            var result = _service.ProcessOrder("P2", 5, 0.10m);
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Insufficient stock.", result.Message);
+        }
     }
 }
