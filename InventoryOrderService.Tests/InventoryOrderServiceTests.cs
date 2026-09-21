@@ -24,5 +24,12 @@ namespace Inventory_test
             Assert.Equal(550, result.TotalCost);
             Assert.Equal(15, product.StockQuantity);
         }
+        [Fact]
+        public void ProcessOrder_ProductDoesNotExist_ReturnsError()
+        {
+            var result = _service.ProcessOrder("P99", 5, 0.10m);
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Product not found.", result.Message);
+        }
     }
 }
