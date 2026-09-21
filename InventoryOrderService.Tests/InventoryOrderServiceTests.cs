@@ -47,5 +47,21 @@ namespace Inventory_test
             Assert.False(result.IsSuccess);
             Assert.Equal("Insufficient stock.", result.Message);
         }
+        [Fact]
+        public void ProcessOrder_FiftyItems_GivesTwentyPercentDiscount()
+        {
+            var product = new Product();
+            product.Id = "P3";
+            product.Name = "Keyboard";
+            product.UnitPrice = 10;
+            product.StockQuantity = 60;
+
+            _service.AddProduct(product);
+
+            var result = _service.ProcessOrder("P3", 50, 0);
+            Assert.True(result.IsSuccess);
+            Assert.Equal(400, result.TotalCost);
+            Assert.Equal(10, product.StockQuantity);
+        }
     }
 }
