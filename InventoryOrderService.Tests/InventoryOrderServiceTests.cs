@@ -78,5 +78,20 @@ namespace Inventory_test
             Assert.True(result.IsSuccess);
             Assert.Equal(180, result.TotalCost);
         }
+        [Fact]
+        public void ProcessOrder_ZeroQuantity_ReturnsError()
+        {
+            var product = new Product();
+            product.Id = "P5";
+            product.Name = "Keyboard";
+            product.UnitPrice = 50;
+            product.StockQuantity = 10;
+
+            _service.AddProduct(product);
+
+            var result = _service.ProcessOrder("P5", 0, 0);
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Quantity must be positive.", result.Message);
+        }
     }
 }
