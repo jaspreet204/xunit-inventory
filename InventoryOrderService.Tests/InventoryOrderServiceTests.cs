@@ -63,5 +63,20 @@ namespace Inventory_test
             Assert.Equal(400, result.TotalCost);
             Assert.Equal(10, product.StockQuantity);
         }
+        [Fact]
+        public void ProcessOrder_TenItems_GivesTenPercentDiscount()
+        {
+            var product = new Product();
+            product.Id = "P4";
+            product.Name = "Headphones";
+            product.UnitPrice = 20;
+            product.StockQuantity = 20;
+
+            _service.AddProduct(product);
+
+            var result = _service.ProcessOrder("P4", 10, 0);
+            Assert.True(result.IsSuccess);
+            Assert.Equal(180, result.TotalCost);
+        }
     }
 }
