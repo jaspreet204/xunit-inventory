@@ -93,5 +93,34 @@ namespace Inventory_test
             Assert.False(result.IsSuccess);
             Assert.Equal("Quantity must be positive.", result.Message);
         }
+        [Fact]
+        public void AddProduct_ValidProduct_CanBeFound()
+        {
+            var product = new Product();
+            product.Id = "P6";
+            product.Name = "Monitor";
+            product.UnitPrice = 200;
+            product.StockQuantity = 5;
+
+            _service.AddProduct(product);
+
+            var result = _service.GetProduct("P6");
+            Assert.NotNull(result);
+            Assert.Equal("Monitor", result.Name);
+            Assert.Equal(200, result.UnitPrice);
+            Assert.Equal(5, result.StockQuantity);
+        }
+        [Fact]
+        public void AddProduct_InvalidProduct_ThrowsError()
+        {
+            var product = new Product();
+            product.Id = "";
+            product.Name = "Phone";
+            product.UnitPrice = 500;
+            product.StockQuantity = 5;
+
+            Assert.Throws<ArgumentException>(() => _service.AddProduct(product));
+        }
+
     }
 }
