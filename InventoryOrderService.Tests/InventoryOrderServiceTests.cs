@@ -121,6 +121,10 @@ namespace Inventory_test
 
             Assert.Throws<ArgumentException>(() => _service.AddProduct(product));
         }
-
+        [Fact]
+        public void AddProduct_NullProduct_ThrowsError()
+        {
+            Assert.Throws<ArgumentException>(() => _service.AddProduct(null));
+        }
     }
 }
